@@ -1,0 +1,137 @@
+#include<SDL/SDL.h>
+//#include"teris.h"
+
+
+void draw_pixel(SDL_Surface *dst, int x, int y, Uint32 color)
+{
+    SDL_Rect offset = {0, 0, 1, 1};
+
+    offset.x = x;
+    offset.y = y;
+
+    SDL_FillRect(dst, &offset, SDL_MapRGB(dst->format,
+                            (char)(color >> 16),
+                            (char)(color >> 8),
+                            (char)color));
+}
+
+void draw_vline(SDL_Surface *dst, int x, int y, int len, Uint32 color)
+{
+    SDL_Rect offset = {0, 0, 1, 1};
+
+    offset.x = x;
+    offset.y = y;
+    offset.h = len;
+
+    SDL_FillRect(dst, &offset, SDL_MapRGB(dst->format,
+                            (char)(color >> 16),
+                            (char)(color >> 8),
+                            (char)color));
+}
+
+void draw_hline(SDL_Surface *dst, int x, int y, int len, Uint32 color)
+{
+    SDL_Rect offset = {0, 0, 1, 1};
+
+    offset.x = x;
+    offset.y = y;
+    offset.w = len;
+
+    SDL_FillRect(dst, &offset, SDL_MapRGB(dst->format,
+                            (char)(color >> 16),
+                            (char)(color >> 8),
+                            (char)color));
+}
+
+void draw_rect(SDL_Surface *dst, int x, int y, int w, int h, Uint32 color)
+{
+    SDL_Rect offset = {0, 0, 1, 1};
+
+    offset.x = x;
+    offset.y = y;
+    offset.w = w;
+    offset.h = h;
+
+    SDL_FillRect(dst, &offset, SDL_MapRGB(dst->format,
+                            (char)(color >> 16),
+                            (char)(color >> 8),
+                            (char)color));
+}
+
+
+void draw_box(SDL_Surface *dst, int x, int y, int w, int h, int border, Uint32 border_color, Uint32 color)
+{
+    draw_rect(dst, x, y, w, h, border_color);
+    draw_rect(dst, x + border, y + border, w - 2 * border, h - border * 2, color);
+}
+
+
+
+
+
+
+int main(void)
+{
+    int ret,i;
+    SDL_Surface *screen = NULL;
+    SDL_Event event;
+  
+   
+    ret = SDL_Init(SDL_INIT_VIDEO);
+   // ERRP(-1 == ret, goto ERR1, 2, "SDL_Init: %s\n", SDL_GetError());
+
+    screen = SDL_SetVideoMode(280, 280, 32, SDL_SWSURFACE);
+    //ERRP(NULL == screen, goto ERR2, 2, "SDL_SetVideoMode: %s\n", SDL_GetError());
+   
+//     SDLK_UP         = 273     SDLK_DOWN       = 274,
+//     SDLK_RIGHT      = 275     SDLK_LEFT       = 276,
+
+
+#define ox 73
+#define oy 18
+#define len_x 131
+#define len_y 242
+#define max_x 12
+#define max_y 22
+#define cub_len 10
+#
+//23 12
+draw_vline(screen,ox-1,oy-1,len_y,0xE0EEEE);
+draw_vline(screen,ox-1+len_x,oy-1,len_y,0xE0EEEE);
+draw_hline(screen,ox-1,oy-1,len_x,0xE0EEEE);
+draw_hline(screen,ox-1,oy-1+len_y,len_x,0xE0EEEE);
+
+
+draw_box(screen,ox,oy,cub_len,cub_len,1,0x0,0x9400D3);
+draw_box(screen,ox+12*cub_len,oy+1,cub_len,cub_len,1,0x0,0x9400D3);
+draw_box(screen,ox,oy+23*cub_len,cub_len,cub_len,1,0x0,0x9400D3);
+draw_box(screen,ox+12*cub_len,oy+23*cub_len,cub_len,cub_len,1,0x0,0x9400D3);
+
+    SDL_Flip(screen);
+
+    while (1)
+    {
+        if (SDL_WaitEvent(&event))
+        {
+            if (event.type == SDL_QUIT)
+                break;
+            else if (event.type == SDL_KEYDOWN)
+            {
+                if (event.key.keysym.sym == SDLK_ESCAPE)
+                    break;
+		if (event.key.keysym.sym == SDLK_UP)
+		    break;
+            }
+        }
+    }
+
+
+    SDL_FreeSurface(screen);
+ERR2:
+    SDL_Quit();
+ERR1:
+    return 0;
+}
+
+
+

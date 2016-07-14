@@ -1,0 +1,66 @@
+
+#include"list.h"
+
+       P=L->Next;
+
+        void
+        Insert( int X,int  Y, List L )
+        {
+            Position TmpCell;
+
+/* 1*/      TmpCell = malloc( sizeof( struct Node ) );
+/* 2*/     
+             
+/* 4*/      TmpCell->x = X;
+	    TmpCell->y = Y;
+                TmpCell->Next = L->Next;
+		L->Next->Prev=TemCell;
+		L->Next=TemCell
+/* 5*/      
+/* 6*/     
+	   L->t++;
+        }
+/* END */
+     void   write(int X,int  Y)
+	{
+	P->x=X;
+	P->y=Y;
+	P=P->Next;
+
+	}
+      
+     void   Retrieve( Position L )
+        { 
+	Position P=L->Next;
+	  while(P!=L)
+	{
+	printf(" x%d.y%d ",P->x,P->y);
+	P=P->Next;
+	}
+	  printf("\n");
+        }
+
+	 void LMakeEmpty(List L)
+	{
+		Position temp, p=L->Next;
+	  while(p!=L)
+	{
+	temp=p;
+	free(temp);
+	p=p->Next;
+	}
+	L->Next=L;
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
