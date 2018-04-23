@@ -1,1 +1,2 @@
-This is a Tetris base on SDL which can run on every machine only if you have install SDL .You need to modify the Makefile on the directory to match you right path  corresponding the SDL.
+This is a Tetris base on SDL which can run on every machine only if you have install SDL .
+You need to modify the Makefile on the directory to match you right path  corresponding the SDL.
